@@ -1,0 +1,27 @@
+{
+  "name": "she_encrypt",
+  "version": "1.0.0",
+  "description": "Cipher with aes-cmac and compute MAC for CAN/Eth frames and SHE cmd args",
+  "main": "SHE_encrypt.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rcoscali/SHE_encrypt.git"
+  },
+  "keywords": [
+    "SHE",
+    "CAN",
+    "Ethernet",
+    "AES-CMAC",
+    "AUTOSAR",
+    "MAC"
+  ],
+  "author": "Rémi COHEN SCALI",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rcoscali/SHE_encrypt/issues"
+  },
+  "homepage": "https://github.com/rcoscali/SHE_encrypt#readme"
+}
