@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/rcoscali/SHE_encrypt/issues"
   },
-  "homepage": "https://github.com/rcoscali/SHE_encrypt#readme"
+  "homepage": "https://github.com/rcoscali/SHE_encrypt#readme",
+  "dependencies": {
+    "aes-js": "^3.1.2",
+    "miyaguchipreneel": "^1.1.3"
+  }
 }
