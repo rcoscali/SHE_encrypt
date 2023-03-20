@@ -54,9 +54,8 @@
             
             var bufferKey = Buffer.from('10357f020289ad8f512662ba988f1111', 'hex');
 	    var she = new SHE(id, name, fv, undefined, pad);
-            console.log(she.buildFrame().toString('hex'));
             var cipheredFrame = she.encrypt_Frame(she.buildFrame(), bufferKey);
-	    expect(cipheredFrame.toString('hex')).toBe('');
+	    expect(cipheredFrame.toString('hex')).toBe('2f93d02c5c218cf565dfe7a2ab0f87f4');
         }
     );
 
@@ -67,8 +66,10 @@
             var fv = Buffer.from('740100c896c2', 'hex');
             var pad = Buffer.from('0000', 'hex');
             
+            var bufferKey = Buffer.from('10357f020289ad8f512662ba988f1111', 'hex');
 	    var she = new SHE(id, name, fv, undefined, pad);
-	    expect(she.buildFrame().toString('hex')).toBe('0697740100c896c20000');
+            var cipheredFrame = she.encrypt_Frame(she.buildFrame(), bufferKey);
+	    expect(cipheredFrame.toString('hex')).toBe('d1f55dadfb95d26e5304b5f1549479b9');
         }
     );
 
@@ -80,8 +81,10 @@
             var payload = Buffer.from('00045308f1171567a02af6', 'hex');
             var pad = Buffer.from('000000', 'hex');
             
+            var bufferKey = Buffer.from('10357f020289ad8f512662ba988f1111', 'hex');
 	    var she = new SHE(id, name, fv, payload, undefined);
-	    expect(she.buildFrame().toString('hex')).toBe('045300045308f1171567a02af6000005d4be4e');
+            var cipheredFrame = she.encrypt_Frame(she.buildFrame(), bufferKey);
+	    expect(cipheredFrame.toString('hex')).toBe('0b2c4e4388cd84b64ac3f49afa17ff4f');
         }
     );
 

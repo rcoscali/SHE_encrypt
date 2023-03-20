@@ -12,6 +12,8 @@
     /*global document, window, escape, unescape, module, require, Uint32Array */
     
     var aesjs = require('aes-js');
+    //const AesCmac = require('aes-cmac').AesCmac;
+    var aesCmac = require('node-aes-cmac').aesCmac;
     var MP = require('miyaguchipreneel');
 
     /*
@@ -56,15 +58,8 @@
      */
     SHE_encrypt.prototype.encrypt_Frame = (msg, key) =>
     {
-        var aesCbc =
-            new aesjs.ModeOfOperation.cbc(
-                aesjs.utils.hex.toBytes(SHE_encrypt.prototype.KDF(key).toString('hex')),
-                aesjs.utils.hex.toBytes(SHE_encrypt.prototype.bufferIV.toString('hex'))
-            );
-        var m2Str = aesCbc.encrypt(
-            aesjs.utils.hex.toBytes(msg.toString('hex'))
-        );
-        return(Buffer.from(m2Str));
+        var aescmac = aesCmac(key, msg, {returnAsBuffer: true});
+        return(aescmac);
     }
 
         /*
