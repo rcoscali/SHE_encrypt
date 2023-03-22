@@ -148,6 +148,12 @@
             }
             return(frame);
         };
+
+        SHE_encrypt.prototype.verifyMac = (key, tMAC) =>
+        {
+            var cipheredFrame = she.encrypt_Frame(encshe.buildFrame(), key);
+            return(cipheredFrame.subarray(0,8).toString('hex') == tMAC.toString('hex'))
+        }
     }
 
         
