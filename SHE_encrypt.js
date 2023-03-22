@@ -66,7 +66,7 @@
      * SHE_decrypt constructor
      *
      */
-    function SHE_encrypt(id, name, fv, payload, pad)
+    function SHE_encrypt(id, name, fv, payload, pad, msb)
     {
         const KeyUpdateEncCte = Buffer.from('010153484500800000000000000000b0', 'hex');
         const bufferIV = Buffer.from('00000000000000000000000000000000', 'hex');
@@ -81,40 +81,65 @@
         SHE_encrypt.prototype.KDF = this.KDF;
         SHE_encrypt.prototype.encrypt_Frame = this.encrypt_Frame;
 
-        this.id = Buffer.from('0' + id, 'hex');
+        this.frameId = id;
+        if (this.frameId !== undefined)
+        {
+            var idRegex = /^0x(?<id>[0-9a-fA-F]+)$/;
+            var fields;
+            if ((fields = idRegex.exec(this.frameId)) != null)
+                this.frameId = fields.groups.id;
+
+            if (this.frameId.length == 2)
+                this.frameId = '00' + this.frameId;
+            else if (this.frameId.length == 3)
+                this.frameId = '0' + this.frameId;                            
+        }
+        else
+            this.frameId = '0000';
+
+        this.frameId = Buffer.from(this.frameId, 'hex');
+
+        console.log("[3] this.frameId.toString('hex') = " + this.frameId.toString('hex'));
+
         this.name = name;
         this.fv = fv;
         this.payload = payload;
         this.pad = pad;
-        SHE_encrypt.prototype.frameId = this.id;
+        this.msb = msb;
+        SHE_encrypt.prototype.frameId = this.frameId;
         SHE_encrypt.prototype.name = this.name;
         SHE_encrypt.prototype.fv = this.fv;
         SHE_encrypt.prototype.payload = this.payload;
         SHE_encrypt.prototype.pad = this.pad;
+        SHE_encrypt.prototype.msb = this.msb;
 
         SHE_encrypt.prototype.buildFrame = () =>
         {
-            var resyncRE = /.*ReSync.*/;
-            var syncRE = /.*Sync.*/;
-            var scfdRE = /.*SC_FD.*/;
+            var resyncRE = /^.*ReSync.*$/g;
+            var syncRE = /^.*Sync.*$/g;
+            var scfdRE = /^.*SC_FD.*$/g;
 
             var frame;
-            if (resyncRE.exec(SHE_encrypt.prototype.name) != null)
+            // Rebuild a ReSync frame
+            if (resyncRE.test(SHE_encrypt.prototype.name))
             {
                 frame = Buffer.concat(
                     [this.frameId, this.fv, this.pad]
                 );
             }
-            else if (syncRE.exec(this.name) != null)
+            // Rebuild a Sync frame
+            else if (syncRE.test(this.name))
             {
                 frame = Buffer.concat(
                     [this.frameId, this.fv, this.pad]
                 );
             }
-            else if (scfdRE.exec(this.name) != null)
+            // Rebuild a misc secured frame
+            // (needing the prev Sync frame MSB)
+            else if (scfdRE.test(this.name))
             {
                 frame = Buffer.concat(
-                    [this.frameId, this.payload, this.fv]
+                    [this.frameId, this.payload, this.msb, this.fv]
                 );
             }
             else
