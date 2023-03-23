@@ -99,8 +99,6 @@
 
         this.frameId = Buffer.from(this.frameId, 'hex');
 
-        console.log("[3] this.frameId.toString('hex') = " + this.frameId.toString('hex'));
-
         this.name = name;
         this.fv = fv;
         this.payload = payload;
