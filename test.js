@@ -8,7 +8,9 @@
 
     const SHE = require('./SHE_encrypt.js');
 
-    test('SHE_decrypt: buildFrame ReSync (0x id)', () =>
+    test(
+        'SHE_decrypt: buildFrame ReSync (0x id)',
+        () =>
         {
             var id = '0x6e0';
             var name = 'FVReSyncFrame_ATCU_FD';
@@ -20,7 +22,9 @@
         }
     );
 
-    test('SHE_decrypt: buildFrame Sync (0x id)', () =>
+    test(
+        'SHE_decrypt: buildFrame Sync (0x id)',
+        () =>
         {
             var id = '0x697';
             var name = 'FVSyncFrame_BCM_FD';
@@ -32,7 +36,9 @@
         }
     );
 
-    test('SHE_decrypt: buildFrame SC_FD (0x id)', () =>
+    test(
+        'SHE_decrypt: buildFrame SC_FD (0x id)',
+        () =>
         {
             var id = '0x453';
             var name = 'USM_A101SC_FD';
@@ -46,7 +52,9 @@
         }
     );
 
-    test('SHE_decrypt: buildFrame ReSync (no 0x id)', () =>
+    test(
+        'SHE_decrypt: buildFrame ReSync (no 0x id)',
+        () =>
         {
             var id = '6e0';
             var name = 'FVReSyncFrame_ATCU_FD';
@@ -58,7 +66,9 @@
         }
     );
 
-    test('SHE_decrypt: buildFrame Sync (no 0x id)', () =>
+    test(
+        'SHE_decrypt: buildFrame Sync (no 0x id)',
+        () =>
         {
             var id = '697';
             var name = 'FVSyncFrame_BCM_FD';
@@ -70,7 +80,9 @@
         }
     );
 
-    test('SHE_decrypt: buildFrame SC_FD (no 0x id)', () =>
+    test(
+        'SHE_decrypt: buildFrame SC_FD (no 0x id)',
+        () =>
         {
             var id = '453';
             var name = 'USM_A101SC_FD';
@@ -84,7 +96,9 @@
         }
     );
 
-    test('SHE_decrypt: cipher ReSync frame (0x id)', () =>
+    test(
+        'SHE_decrypt: cipher ReSync frame (0x id)',
+        () =>
         {
             var id = '0x6e0';
             var name = 'FVReSyncFrame_ATCU_FD';
@@ -98,7 +112,9 @@
         }
     );
 
-    test('SHE_decrypt: cipher ReSync frame (no 0x id)', () =>
+    test(
+        'SHE_decrypt: cipher ReSync frame (no 0x id)',
+        () =>
         {
             var id = '6e0';
             var name = 'FVReSyncFrame_ATCU_FD';
@@ -112,7 +128,9 @@
         }
     );
 
-    test('SHE_decrypt: cipher Sync frame (0x id)', () =>
+    test(
+        'SHE_decrypt: cipher Sync frame (0x id)',
+        () =>
         {
             var id = '0x697';
             var name = 'FVSyncFrame_BCM_FD';
@@ -126,7 +144,9 @@
         }
     );
 
-    test('SHE_decrypt: cipher Sync frame (no 0x id)', () =>
+    test(
+        'SHE_decrypt: cipher Sync frame (no 0x id)',
+        () =>
         {
             var id = '697';
             var name = 'FVSyncFrame_BCM_FD';
@@ -140,7 +160,9 @@
         }
     );
 
-    test('SHE_decrypt: cipher SC_FD frame (0x id)', () =>
+    test(
+        'SHE_decrypt: cipher SC_FD frame (0x id)',
+        () =>
         {
             var id = '0x453';
             var name = 'USM_A101SC_FD';
@@ -156,7 +178,9 @@
         }
     );
 
-    test('SHE_decrypt: cipher SC_FD frame (no 0x id)', () =>
+    test(
+        'SHE_decrypt: cipher SC_FD frame (no 0x id)',
+        () =>
         {
             var id = '453';
             var name = 'USM_A101SC_FD';
@@ -172,7 +196,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered SC_FD frame', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered SC_FD frame',
+        () =>
         {
             //  This is the Sync Frame of the Domain master ECU preceding the frame for which the MAC is computed
             //    0.035032 CANFD   3 Rx        697  FVSyncFrame_BCM_FD               1 0 a 16 00 00 05 d2 c4 86 00 00 34 e9 95 71 29 6b ee c1
@@ -202,7 +228,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered Sync frame (CDM)', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered Sync frame (CDM)',
+        () =>
         {
             //   0.115460 CANFD   3 Rx        69d  FVSyncFrame_CDM_FD               1 0 a 16 00 00 09 43 06 4b 00 00 12 4f 49 e3 a4 23 4f 96
             //   <------> <--->   ^ ^         <->  <---------------->                     <> <---------> <---> <---> <--------------------->
@@ -224,7 +252,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered ReSync frame (CDM)', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered ReSync frame (CDM)',
+        () =>
         {
             // 1629.949878 CANFD   3 Rx        6e0  FVReSyncFrame_ATCU_FD            1 0 e 48 74 01 00 ca 84 b4 00 00 05 d8 8c 22 00 00 09 56 99 dc 00 00 02 09 69 af 00 00 00 00 00 00 00 00 11 b3 f1 d6 00 00 00 00 2f 30 8d f6 27 2a f5 db
             // <---------> <--->   ^  ^        <->  <------------------->                  <> <---------------------------------------------------------------------------------------------------------> <---------> <--------------------->
@@ -245,7 +275,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered SC_FD frame', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered SC_FD frame',
+        () =>
         {
             //  This is the Sync Frame of the Domain master ECU preceding the frame for which the MAC is computed
             //    0.035032 CANFD   3 Rx        697  FVSyncFrame_BCM_FD               1 0 a 16 00 00 05 d2 c4 86 00 00 34 e9 95 71 29 6b ee c1
@@ -275,7 +307,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered Sync frame (CDM)', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered Sync frame (CDM)',
+        () =>
         {
             //   0.115460 CANFD   3 Rx        69d  FVSyncFrame_CDM_FD               1 0 a 16 00 00 09 43 06 4b 00 00 12 4f 49 e3 a4 23 4f 96
             //   <------> <--->   ^ ^         <->  <---------------->                     <> <---------> <---> <---> <--------------------->
@@ -297,7 +331,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered ReSync frame (CDM)', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered ReSync frame (CDM)',
+        () =>
         {
             // 1629.949878 CANFD   3 Rx        6e0  FVReSyncFrame_ATCU_FD            1 0 e 48 74 01 00 ca 84 b4 00 00 05 d8 8c 22 00 00 09 56 99 dc 00 00 02 09 69 af 00 00 00 00 00 00 00 00 11 b3 f1 d6 00 00 00 00 2f 30 8d f6 27 2a f5 db
             // <---------> <--->   ^  ^        <->  <------------------->                  <> <---------------------------------------------------------------------------------------------------------> <---------> <--------------------->
@@ -317,7 +353,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered ReSync frame (CDM)', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered ReSync frame (CDM)',
+        () =>
         {
             
             // 939.465237 CANFD   3 Rx        6e4  FVReSyncFrame_ADAS_FD            1 0 e 48 74 01 00 ca 48 13 00 00 00 68 73 fe 00 00 05 d6 d8 5b 00 00 09 4e 55 4b 00 00 00 00 00 40 00 00 11 a4 b4 01 00 00 00 00 7b 85 a2 c6 a8 26 4b 8e
@@ -333,7 +371,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered Sync frame (CDM)', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered Sync frame (CDM)',
+        () =>
         {
             // 939.468032 CANFD   3 Rx        698  FVSyncFrame_PWT_FD               1 0 a 16 74 01 00 c9 48 16 00 00 6c 77 7c 2d 9e 11 93 5f
 
@@ -349,7 +389,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered ReSync frame (CDM)', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered ReSync frame (CDM)',
+        () =>
         {
             
             // 939.465237 CANFD   3 Rx        6e4  FVReSyncFrame_ADAS_FD            1 0 e 48 74 01 00 ca 48 13 00 00 00 68 73 fe 00 00 05 d6 d8 5b 00 00 09 4e 55 4b 00 00 00 00 00 40 00 00 11 a4 b4 01 00 00 00 00 7b 85 a2 c6 a8 26 4b 8e
@@ -365,7 +407,9 @@
         }
     );
 
-    test('SHE_decrypt: verify MAC for ciphered Sync frame (CDM)', () =>
+    test(
+        'SHE_decrypt: verify MAC for ciphered Sync frame (CDM)',
+        () =>
         {
             // 939.468032 CANFD   3 Rx        698  FVSyncFrame_PWT_FD               1 0 a 16 74 01 00 c9 48 16 00 00 6c 77 7c 2d 9e 11 93 5f
 
