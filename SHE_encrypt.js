@@ -151,7 +151,7 @@
 
         SHE_encrypt.prototype.verifyMac = (key, tMAC) =>
         {
-            var cipheredFrame = she.encrypt_Frame(encshe.buildFrame(), key);
+            var cipheredFrame = this.encrypt_Frame(this.buildFrame(), key);
             return(cipheredFrame.subarray(0,8).toString('hex') == tMAC.toString('hex'))
         }
     }

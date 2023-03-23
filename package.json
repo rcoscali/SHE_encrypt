@@ -1,6 +1,6 @@
 {
   "name": "she_encrypt",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cipher with aes-cmac and compute MAC for CAN/Eth frames and SHE cmd args",
   "main": "SHE_encrypt.js",
   "scripts": {
