@@ -99,15 +99,15 @@
 
         this.type = Buffer.from(this.type, 'hex');
 
-        this.name = name;
-        this.ecuName = ecuName;
-        this.dlc = dlc;
-        this.tmac = tmac;
-        this.fv = fv;
-        this.payload = payload;
-        this.msb = msb;
-        this.lsb = lsb;
-        this.pad = pad;
+        this.name = (name === undefined ? Buffer.alloc(0) : name);
+        this.ecuName = (ecuName === undefined ? Buffer.alloc(0) : ecuName);
+        this.dlc = (dlc === undefined ? Buffer.alloc(0) : dlc);
+        this.tmac = (tmac === undefined ? Buffer.alloc(0) : tmac);
+        this.fv = (fv === undefined ? Buffer.alloc(0) : fv);
+        this.payload = (payload === undefined ? Buffer.alloc(0) : payload);
+        this.msb = (msb === undefined ? Buffer.alloc(0) : msb);
+        this.lsb = (lsb === undefined ? Buffer.alloc(0) : lsb);
+        this.pad = (pad === undefined ? Buffer.alloc(0) : pad);
         SHE_encrypt.prototype.type = this.type;
         SHE_encrypt.prototype.name = this.name;
         SHE_encrypt.prototype.ecuName = this.ecuName;
@@ -128,6 +128,10 @@
             
             if (resyncRE.test(SHE_encrypt.prototype.name))
             {
+                if (this.fv === undefined)
+                    this.fv = Buffer.alloc(0);
+                if (this.pad === undefined)
+                    this.pad = Buffer.alloc(0);
                 frame = Buffer.concat(
                     [this.type, this.fv, this.pad]
                 );
@@ -135,6 +139,10 @@
             // Rebuild a Sync frame
             else if (syncRE.test(this.name))
             {
+                if (this.fv === undefined)
+                    this.fv = Buffer.alloc(0);
+                if (this.pad === undefined)
+                    this.pad = Buffer.alloc(0);
                 frame = Buffer.concat(
                     [this.type, this.fv, this.pad]
                 );
@@ -143,6 +151,12 @@
             // (needing the prev Sync frame MSB)
             else if (scfdRE.test(this.name))
             {
+                if (this.payload === undefined)
+                    this.payload = Buffer.alloc(0);
+                if (this.msb === undefined)
+                    this.msb = Buffer.alloc(0);
+                if (this.lsb === undefined)
+                    this.lsb = Buffer.alloc(0);
                 frame = Buffer.concat(
                     [this.type, this.payload, this.msb, this.lsb]
                 );
