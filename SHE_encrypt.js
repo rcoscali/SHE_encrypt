@@ -66,7 +66,7 @@
      * SHE_decrypt constructor
      *
      */
-    function SHE_encrypt(id, name, fv, payload, pad, msb)
+    function SHE_encrypt(type, name, timestamp, ecuName, dlc, tmac, fv, payload, msb, lsb, pad)
     {
         const KeyUpdateEncCte = Buffer.from('010153484500800000000000000000b0', 'hex');
         const bufferIV = Buffer.from('00000000000000000000000000000000', 'hex');
@@ -81,35 +81,41 @@
         SHE_encrypt.prototype.KDF = this.KDF;
         SHE_encrypt.prototype.encrypt_Frame = this.encrypt_Frame;
 
-        this.frameId = id;
-        if (this.frameId !== undefined)
+        this.type = type;
+        if (this.type !== undefined)
         {
-            var idRegex = /^0x(?<id>[0-9a-fA-F]+)$/;
+            var typeRegex = /^0x(?<type>[0-9a-fA-F]+)$/;
             var fields;
-            if ((fields = idRegex.exec(this.frameId)) != null)
-                this.frameId = fields.groups.id;
+            if ((fields = typeRegex.exec(this.type)) != null)
+                this.type = fields.groups.type;
 
-            if (this.frameId.length == 2)
-                this.frameId = '00' + this.frameId;
-            else if (this.frameId.length == 3)
-                this.frameId = '0' + this.frameId;                            
+            if (this.type.length == 2)
+                this.type = '00' + this.type;
+            else if (this.type.length == 3)
+                this.type = '0' + this.type;                            
         }
         else
-            this.frameId = '0000';
+            this.type = '0000';
 
-        this.frameId = Buffer.from(this.frameId, 'hex');
+        this.type = Buffer.from(this.type, 'hex');
 
         this.name = name;
+        this.ecuName = ecuName;
+        this.dlc = dlc;
+        this.tmac = tmac;
         this.fv = fv;
         this.payload = payload;
-        this.pad = pad;
         this.msb = msb;
-        SHE_encrypt.prototype.frameId = this.frameId;
+        this.lsb = lsb;
+        this.pad = pad;
+        SHE_encrypt.prototype.type = this.type;
         SHE_encrypt.prototype.name = this.name;
+        SHE_encrypt.prototype.ecuName = this.ecuName;
         SHE_encrypt.prototype.fv = this.fv;
         SHE_encrypt.prototype.payload = this.payload;
-        SHE_encrypt.prototype.pad = this.pad;
         SHE_encrypt.prototype.msb = this.msb;
+        SHE_encrypt.prototype.lsb = this.lsb;
+        SHE_encrypt.prototype.pad = this.pad;
 
         SHE_encrypt.prototype.buildFrame = () =>
         {
@@ -119,17 +125,18 @@
 
             var frame;
             // Rebuild a ReSync frame
+            
             if (resyncRE.test(SHE_encrypt.prototype.name))
             {
                 frame = Buffer.concat(
-                    [this.frameId, this.fv, this.pad]
+                    [this.type, this.fv, this.pad]
                 );
             }
             // Rebuild a Sync frame
             else if (syncRE.test(this.name))
             {
                 frame = Buffer.concat(
-                    [this.frameId, this.fv, this.pad]
+                    [this.type, this.fv, this.pad]
                 );
             }
             // Rebuild a misc secured frame
@@ -137,7 +144,7 @@
             else if (scfdRE.test(this.name))
             {
                 frame = Buffer.concat(
-                    [this.frameId, this.payload, this.msb, this.fv]
+                    [this.type, this.payload, this.msb, this.lsb]
                 );
             }
             else
@@ -147,10 +154,10 @@
             return(frame);
         };
 
-        SHE_encrypt.prototype.verifyMac = (key, tMAC) =>
+        SHE_encrypt.prototype.verifyMac = (key) =>
         {
             var cipheredFrame = this.encrypt_Frame(this.buildFrame(), key);
-            return(cipheredFrame.subarray(0,8).toString('hex') == tMAC.toString('hex'))
+            return(cipheredFrame.subarray(0,8).toString('hex') == this.tmac.toString('hex'))
         }
     }
 
